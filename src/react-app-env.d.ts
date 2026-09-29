@@ -1,2 +1,8 @@
 /// <reference types="react-scripts" />
-declare module '*.less' {}//能够识别.less结尾的文件
+
+declare module '*.module.less' {
+  const styles: { readonly [className: string]: string };
+  export default styles;
+}
+
+declare module '*.less' {}

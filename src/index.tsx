@@ -2,17 +2,16 @@ import ReactDOM from 'react-dom/client';
 import './index.less';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { RouterProvider } from 'react-router'
-import router from './router'
-import { Suspense } from 'react'
-
+import { Provider } from 'react-redux';
+import { store } from './store/Store'
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <Suspense fallback={<div>正在玩命加载中......</div>}>
-    <RouterProvider router={router}></RouterProvider>
-  </Suspense>
+  //Suspense 是因为我这里采用了懒加载的方式 而Provider是用来给给全局提供store数据的
+      <Provider store={store}>
+        <App></App>
+      </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

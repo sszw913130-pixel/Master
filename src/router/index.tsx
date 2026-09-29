@@ -1,14 +1,13 @@
 import { createBrowserRouter } from 'react-router'
 import { lazy } from 'react'
-
 // 懒加载 App 组件
-const App = lazy(() => import('../App'))
 const Login=lazy(()=>import("../views/login"))
+const Welcome=lazy(()=>import("../views/welcome"))
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/welcome',
     element: (
-        <App />
+        <Welcome></Welcome>
     ),
   },
   {

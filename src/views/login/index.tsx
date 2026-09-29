@@ -1,21 +1,44 @@
-import { Form,Button,Input } from "antd"
+import { Form,Button,Input, message } from "antd"
 import { UserOutlined,UnlockOutlined } from '@ant-design/icons';
-import "./index.less"
-import { Color } from "antd/es/color-picker"
-const Login=()=>{
-    const onFinish=()=>{}
-    const onFinishFailed=()=>{
+import styles from "./index.module.less"
+import { ILoginParams } from "../../types/loginTypes";
+import { login } from "../../api/login";
+import storage from "../../utils/storage"
+import {useDispatch} from "react-redux"
+import { setUserInfo } from "../../store/Auth/user/userSlice"
+import { useNavigate } from "react-router"
 
+const Login=()=>{
+    const [form]=Form.useForm()//获取表单实例
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+    const onFinish=async (values:ILoginParams)=>{
+        try{
+            console.log(form);
+            const userName=form.getFieldValue("username");
+            // 发起登录请求
+            const res = await login(values);
+            const data = res.data
+            message.success("登录成功")
+            // 只存储token，不要存整个data，token是字符串，不需要JSON.stringify
+            storage.set("token", data.token)
+            console.log(values);
+            dispatch(setUserInfo(userName))
+            navigate('/welcome')
+        }catch(err){
+            console.error('登录失败：',err)
+            message.error('登录失败，请检查账号密码或服务器状态')
+        }
     }
-    return <div className="login">
-        <div className="login-wrapper">
-            <div className="title">Login System</div>
+    return <div className={styles.login}>
+        <div className={styles.loginWrapper}>
+            <div className={styles.title}>Login System</div>
             <Form
+            form={form}
                 style={{ maxWidth: 600 }}
                 name="basic"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
             >
                 <Form.Item
                     label="Username"
@@ -24,7 +47,6 @@ const Login=()=>{
                 >
                 <Input prefix={<UserOutlined />} style={{width:"450px"}}/>
                 </Form.Item>
-
                 <Form.Item
                     label="Password"
                     name="password"

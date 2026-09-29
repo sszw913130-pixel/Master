@@ -1,12 +1,10 @@
 import "./index.less"
+import router from "./router"
+import { RouterProvider } from 'react-router/dom'
+import { Suspense } from "react"
 function App() {
-    console.log(process.env.REACT_APP_BASE_URL);  
-    return  <div className="root">
-        <div className="box">
-            <p>
-               Hello World! I Am SU AN Engineer!
-            </p>
-        </div>
-    </div>
+    return <Suspense fallback={<div>正在玩命加载中......</div>}>
+        <RouterProvider router={router}></RouterProvider>
+     </Suspense>
 }
 export default App;
