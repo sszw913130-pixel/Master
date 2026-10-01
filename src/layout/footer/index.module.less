@@ -1,0 +1,17 @@
+.footer {
+  text-align: center;
+  line-height: 30px;
+  color: #b0aeae;
+  font-size: 14px;
+  margin-top: 20px;
+  //加了global表示全局样式了
+  :global(a) {
+    color: #b0aeae;
+    &:hover {
+      color: #1677ff;
+    }
+  }
+  :global(.gutter) {
+    margin: 0 10px;
+  }
+}

@@ -23,6 +23,8 @@ const Login=()=>{
             // 只存储token，不要存整个data，token是字符串，不需要JSON.stringify
             storage.set("token", data.token)
             console.log(values);
+            //这里将用户名存储到本地
+            storage.set("username",userName)
             dispatch(setUserInfo(userName))
             navigate('/welcome')
         }catch(err){
